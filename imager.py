@@ -33,21 +33,16 @@ class Imager:
 			for y in range(cy-yHighest, cy+yHighest):
 					if (x >= fxA and x <= fxB and y >= fyA and y <= fyB): # in frame
 						RCurrent = (1.0*(x-cx)*(x-cx)/(Rx*Rx)) + (1.0*(y-cy)*(y-cy)/(Ry*Ry)) # square of the radius
-					if (RCurrent < RLowest*RLowest): self.data[y][x] = color # colored inner Ellipse
-					elif (RCurrent > RHighest*RHighest): pass # no ellipse
-					else: # shaded outer ellipse-ring-oid
-						if (fade > 0): # only needed if any fade
-							weight = (1.0*(RHighest-math.sqrt(RCurrent))/(RHighest-RLowest))**2 # weight squared looks nicer
-							for i in range(0, 3):
-								self.data[y][x][i] = int(1.0*self.data[y][x][i]*(1-weight)) + int(1.0*color[i]*weight)
+						if (RCurrent < RLowest*RLowest): self.data[y][x] = color # colored inner Ellipse
+						elif (RCurrent > RHighest*RHighest): pass # no ellipse
+						else: # shaded outer ellipse-ring-oid
+							if (fade > 0): # only needed if any fade
+								weight = (1.0*(RHighest-math.sqrt(RCurrent))/(RHighest-RLowest))**2 # weight squared looks nicer
+								for i in range(0, 3):
+									self.data[y][x][i] = int(1.0*self.data[y][x][i]*(1-weight)) + int(1.0*color[i]*weight)
 
 	def circle(self, cx, cy, R, color, fade=0, fxA=None, fyA=None, fxB=None, fyB=None):
-		if fxA == None: fxA = 0
-		if fyA == None: fyA = 0
-		if fxB == None: fxB = self.width-1
-		if fyB == None: fyB = self.height-1
-		
-		ellipse(self, cx, cy, R, R, color, fade, fxA, fyA, fxB, fyB)
+		self.ellipse(cx, cy, R, R, color, fade, fxA, fyA, fxB, fyB)
 
 #	def circle(self, cx, cy, R, color, fade=0, fxA=0, fyA=0, fxB=self.width-1, fyB=self.height-1):
 #		if fade > 100: return # throw error
