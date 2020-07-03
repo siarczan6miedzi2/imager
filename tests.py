@@ -1,6 +1,7 @@
 import imager as img
+from random import randint as rand
 
-# test of circles with varoius parametres
+# circles with varoius parametres
 
 imager = img.Imager(1000, 1000)
 
@@ -16,3 +17,12 @@ for i in range(5):
 		imager.circle(x, y, R, [colR, colG, colB], fade=f)
 
 imager.save("circles.png")
+
+# eye-on-a-peacock's-tail pattern made out of circles
+
+imager = img.Imager(1000, 1000)
+
+for R in range(400, 0, -40):
+	imager.circle(R, 499, R, [rand(0, 255), rand(0, 255), rand(0, 255)])
+
+imager.save("peacock.png")
